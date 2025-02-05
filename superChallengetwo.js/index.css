@@ -1,0 +1,72 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+main {
+  width: 250px;
+  border: 1px solid;
+  margin: 2em auto;
+  padding: 1.5em;
+  min-height: 400px;
+  background-color: #282828;
+  border-radius: 6px;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 110%;
+}
+
+.input-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8em;
+}
+
+input[type="text"] {
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border: none;
+  padding: 0.4em;
+}
+
+button {
+  border: none;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: deeppink;
+  color: white;
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+}
+
+hr {
+  border: 1px solid deeppink;
+}
+
+.contact-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.contact-card {
+  background-color: whitesmoke;
+  color: #222;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+p {
+  margin: 0 0 0.8em 0;
+}
+
+p:last-child {
+  margin-bottom: 0px;
+}
