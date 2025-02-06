@@ -173,3 +173,39 @@ const product = {
 const productDetails = product.getProductInfo.bind(product); // without the bind(product) - 'this' would be undefined
 
 productDetails();
+
+// Private Fields
+
+class Holiday {
+  #destination;
+  #price;
+  constructor(destination, price) {
+    this.#destination = destination;
+    this.#price = price;
+  }
+
+  get destination() {
+    return this.#destination;
+  }
+
+  set destination(newDestination) {
+    if (typeof newDestination !== "string" || newDestination.length <= 0) {
+      throw new Error("Destination not valid");
+    }
+    this.#destination = newDestination;
+  }
+
+  get price() {
+    return `$${this.#price}`;
+  }
+
+  set price(newPrice) {
+    return (this.#price = newPrice);
+  }
+}
+
+const safari = new Holiday("Haiti", 500);
+safari.destination = "new destination"; // can't access because it is private, unless it setter is provided
+console.log(safari.destination);
+safari.price = 132.293;
+console.log(safari.price);
