@@ -81,3 +81,62 @@ const invoiceIndexOver1k = invoicesUSDArr.findIndex(function (invoice) {
 // .at() takes a positive or negative integer and returns the item at that index.
 // Negative integers count back from the end of the array.
 console.log(invoicesUSDArr.at(-2));
+
+// hasOwn and hasOwnProperty method
+const user1 = {
+  username: "rpchan",
+  subscriptionLevel: "bronze",
+  accessPremiumFeature: true,
+};
+
+const user2 = {
+  username: "bcstevens",
+  subscriptionLevel: "silver",
+  accessPremiumFeature: false,
+};
+
+const user3 = Object.create(null); // this is a pure object, it doesn't have any prototype
+// user3.username = 'Tom'
+
+// console.log(user3.hasOwnProperty('username')) // this will throw an error
+console.log(Object.hasOwn(user3, "username"));
+
+function canAccessPremiumFeature(userObj, prop) {
+  // return userObj.hasOwnProperty(prop) && userObj[prop]
+  return Object.hasOwn(userObj, prop) && userObj[prop];
+}
+
+// console.log(canAccessPremiumFeature(user1, 'accessPremiumFeature'))
+// console.log(canAccessPremiumFeature(user2, 'accessPremiumFeature'))
+
+// Shallow copies with the spread operator
+const averageSharePriceByMonthQ1 = [109.6, 103.3, 89.4];
+const averageSharePriceByMonthQ2 = [109.3, 126.1, 103.3];
+const averageSharePriceByMonthQ3 = [120.8, 102.3, 106.8];
+const averageSharePriceByMonthQ4 = [110.9, 119.8, 113.7];
+
+function findPriceExtremes(arr) {
+  /*
+Challenge:
+2. Find the highest number from the array 
+   and store it in the const 'highest'. 
+3. Find the lowest number from the array 
+   and store it in the const 'lowest'. 
+*/
+  const highest = Math.max(...arr);
+  const lowest = Math.min(...arr);
+  console.log(`The highest average share price was ${highest}`);
+  console.log(`The lowest average share price was ${lowest}`);
+}
+
+/*
+Challenge:
+1. Call this function with one array holding 
+   all of the data from the 4 arrays above.
+*/
+findPriceExtremes([
+  ...averageSharePriceByMonthQ1,
+  ...averageSharePriceByMonthQ2,
+  ...averageSharePriceByMonthQ3,
+  ...averageSharePriceByMonthQ4,
+]);
