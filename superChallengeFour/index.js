@@ -1,9 +1,8 @@
 class Character {
   static count = 0;
-  #health;
+  #health = 100;
   constructor(name, health) {
     this.name = name;
-    this.#health = 100;
     Character.incrementCount();
   }
 
@@ -12,7 +11,7 @@ class Character {
   }
 
   static getCount() {
-    return this.count;
+    return Character.count;
   }
 
   get health() {
@@ -20,13 +19,11 @@ class Character {
   }
 
   set health(newHealth) {
-    if (this.#health > 0) {
-      this.#health = newHealth;
-    }
+    this.#health = Math.max(0, newHealth);
   }
 
   takeDamage(amount) {
-    this.#health -= amount;
+    this.health -= amount;
   }
 
   get isAlive() {
@@ -34,11 +31,9 @@ class Character {
   }
 
   getStatus() {
-    return {
-      name: this.name,
-      health: this.#health,
-      isAlive: this.isAlive,
-    };
+    return `${this.name} has ${this.health} health and is ${
+      this.isAlive ? "alive" : "dead"
+    }.`;
   }
   /* Base Character Class
 Your task is to design and implement a Character class with properties 'name' (a string), 'health' (a number), and isAlive (a boolean). This class will serve as a foundation for a simple game or simulation where characters can take damage and possibly "die" if their health reaches zero.
@@ -93,7 +88,7 @@ Item Retrieval:
 
   getItems() {
     return this.inventory.length > 0
-      ? `Items: ${this.inventory.join(", ")}`
+      ? `${this.name} has the following items: ${this.inventory.join(", ")}`
       : "No items in inventory.";
   }
 }
