@@ -205,7 +205,247 @@ class Holiday {
 }
 
 const safari = new Holiday("Haiti", 500);
-safari.destination = "new destination"; // can't access because it is private, unless it setter is provided
+safari.destination = "new destination"; // can't access because it is private, unless a setter is provided
 console.log(safari.destination);
 safari.price = 132.293;
 console.log(safari.price);
+
+// .call method
+function displayPolitician(currentSituation) {
+  // console.log(this)
+  console.log(
+    `${this.name} is ${this.age} years old. Current situation: ${currentSituation}.`
+  );
+}
+
+const politician1 = {
+  name: "Carly Fowler",
+  age: 40,
+};
+
+displayPolitician.call(politician1, "In jail for corruption");
+
+// .apply method
+function displayPolitician(currentSituation) {
+  // console.log(this)
+  console.log(
+    `${this.name} is ${this.age} years old. Current situation: ${currentSituation}.`
+  );
+}
+
+const politician3 = {
+  name: "Carly Fowler",
+  age: 40,
+};
+
+const politician2 = {
+  name: "Dave Bland",
+  age: 55,
+};
+
+displayPolitician.apply(politician3, ["In jail for corruption"]); // simular to .call except the second argument is an array
+
+// inheritance
+
+class Event {
+  constructor(name, location, date) {
+    this.name = name;
+    this.location = location;
+    this.date = date;
+  }
+
+  getDetails() {
+    return `Event: ${this.name}, Location: ${this.location}, Date: ${this.date}`;
+  }
+}
+
+class TennisMatch extends Event {
+  constructor(name, location, date, player1, player2) {
+    super(name, location, date);
+    this.player1 = player1;
+    this.player2 = player2;
+  }
+
+  getDetails() {
+    return `${super.getDetails()}, Players: ${this.player1} vs ${this.player2}`;
+  }
+}
+
+const tennisMatch1 = new TennisMatch(
+  "Wimbledon",
+  "London",
+  "July 2023",
+  "Serena Williams",
+  "Maria Sharapova"
+);
+
+console.log(tennisMatch1.getDetails());
+
+// Symbols
+
+const book = {
+  title: "The Alchemist",
+  author: "Paulo Coelho",
+  year: 1988,
+};
+
+const note = Symbol("librarian note");
+
+book[note] = "This book is a must-read!";
+
+console.log(book[note]);
+
+// Symbols are unique, even if they have the same description
+
+// the Map Object
+const athlete1 = { name: "Usain Bolt", sport: "Athletics" };
+const athlete2 = { name: "Serena Williams", sport: "Tennis" };
+const athlete3 = { name: "Michael Phelps", sport: "Swimming" };
+
+const athleteMedals = new Map();
+athleteMedals.set(athlete1, 8);
+
+console.log(athleteMedals.get(athlete1)); // 8
+
+athleteMedals.set(athlete2, 23);
+athleteMedals.set(athlete3, 28);
+
+athleteMedals.delete(athlete1); // removes the key-value pair
+athleteMedals.has(athlete1); // false
+
+console.log(athleteMedals.size); // 2
+
+athleteMedals.forEach((value, key) => {
+  console.log(`${key.name} has won ${value} medals`);
+});
+
+// insertion order is maintained in the Map Object
+/* 
+Challenge:
+
+  1. Create a map object 'athletes' to store the athletes.
+  2. Create a addAthlete function that takes an athlete object and the number of medals they have won. it should add the athlete to the map object.
+  3. Create a getSummary function that logs the name of each athlete and the number of medals they have won.
+*/
+
+const athletes = new Map();
+
+function addAthlete(athlete, medals) {
+  athletes.set(athlete, medals);
+}
+
+function getSummary() {
+  athletes.forEach((value, key) => {
+    console.log(`${key.name} has won ${value} medals`);
+  });
+}
+
+addAthlete(athlete1, 8);
+addAthlete(athlete2, 23);
+addAthlete(athlete3, 28);
+
+getSummary();
+
+// the Set Object
+const starAthletes = new Set();
+starAthletes.add("Usain Bolt");
+starAthletes.add("Serena Williams");
+starAthletes.add("Michael Phelps");
+
+console.log(starAthletes.size); // 3
+
+starAthletes.forEach((athlete) => {
+  console.log(athlete);
+});
+// the clear method removes all elements from the set
+// set has no keys or values, only values
+// set has no get method, only has has method
+// set has no duplicate values
+// set has the forEach method but not map method
+// set can transform to an array
+const starAthletesArr = Array.from(starAthletes);
+
+// Closures
+function createCounter() {
+  let count = 0;
+
+  return function () {
+    count++;
+    return count;
+  };
+}
+
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+
+function scorePoint(playerName) {
+  let score = 0;
+
+  return {
+    increaseScore: function () {
+      score++;
+      return score;
+    },
+    decreaseScore: function () {
+      score--;
+      return score;
+    },
+    displayScore: function () {
+      return `${playerName} has ${score} points`;
+    },
+  };
+}
+
+const player1 = scorePoint("Max");
+const player2 = scorePoint("Tom");
+
+console.log(player1.increaseScore()); // 1
+console.log(player1.increaseScore()); // 2
+console.log(player1.displayScore()); // Max has 2 points
+console.log(player2.decreaseScore()); // -1
+console.log(player2.displayScore()); // Tom has -1 points
+
+/* 
+Final Closure Challenge:
+
+1. Write a function that simulates a simple bank account.
+   the function should store the balance and enable users to deposit, withdraw and view their balance.
+
+
+requirements:
+- The account balance should start at zero.
+- The function should return an object containing 3 functions. one for depositing money, one for withdrawing money and one for getBalance function which logs the balance and the account holder's name.
+
+- Deposits should add to the balance, and withdrawals should subtract from the balance.
+*/
+
+function createBankAccount(name) {
+  let balance = 0;
+
+  return {
+    deposit: function (amount) {
+      balance += amount;
+      return balance;
+    },
+    withdraw: function (amount) {
+      balance -= amount;
+      return balance;
+    },
+    getBalance: function () {
+      return `${name} has a balance of $${balance}`;
+    },
+  };
+}
+
+const daveAccount = createBankAccount("Dave");
+const wendyAccount = createBankAccount("Weendy");
+
+console.log(daveAccount.deposit(100)); // 100
+console.log(daveAccount.withdraw(50)); // 50
+console.log(daveAccount.getBalance()); // Dave has a balance of $50
+
+console.log(wendyAccount.deposit(200)); // 200
+console.log(wendyAccount.withdraw(100)); // 100
+console.log(wendyAccount.getBalance()); // Wendy has a balance of $100
