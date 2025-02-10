@@ -449,3 +449,107 @@ console.log(daveAccount.getBalance()); // Dave has a balance of $50
 console.log(wendyAccount.deposit(200)); // 200
 console.log(wendyAccount.withdraw(100)); // 100
 console.log(wendyAccount.getBalance()); // Wendy has a balance of $100
+
+// Debouncing
+
+function debounce(callback, delay) {
+  let timeout;
+
+  return function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      callback.apply(this, arguments);
+    }, delay);
+  };
+}
+
+function saveInput() {
+  console.log("Saving data");
+}
+
+const processChange = debounce(saveInput, 2000);
+
+// Debouncing with arrow function
+
+const debounce = (callback, delay) => {
+  let timeout;
+
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+};
+
+function handleDebouncingInput(e) {
+  console.log("Input dected from", e.target.value);
+}
+
+document
+  .getElementById("name-input")
+  .addEventListener("input", debounce(handleDebouncingInput, 500));
+
+// Throttling
+function throttle(callback, limit) {
+  let waiting = false;
+
+  return function () {
+    if (!waiting) {
+      callback.apply(this, arguments);
+      waiting = true;
+      setTimeout(() => {
+        waiting = false;
+      }, limit);
+    }
+  };
+}
+
+function saveInput() {
+  console.log("Saving data");
+}
+
+const processChangeThrottling = throttle(saveInput, 2000);
+
+// Throttling with arrow function
+
+const throttle = (callback, limit) => {
+  let waiting = false;
+
+  return (...args) => {
+    if (!waiting) {
+      callback(...args);
+      waiting = true;
+      setTimeout(() => {
+        waiting = false;
+      }, limit);
+    }
+  };
+};
+
+function handleThrottlingInput(e) {
+  console.log("Input dected from", e.target.value);
+}
+
+document
+  .getElementById("name-input")
+  .addEventListener("input", throttle(handleThrottlingInput, 500));
+
+// Generators
+function* generateSequence() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const sequence = generateSequence();
+
+function* colorGenerator() {
+  let color = "#";
+
+  for (let i = 0; i < 6; i++) {
+    const randomHex = Math.floor(Math.random() * 16);
+    color += "0123456789ABCDEF"[randomHex];
+  }
+  yield color;
+}
